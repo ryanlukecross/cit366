@@ -13,28 +13,28 @@ import { DocumentDetailComponent } from './documents/document-detail/document-de
 import { MessageItemComponent } from './messages/message-item/message-item.component';
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
-import { ContactItemComponent } from './contact-item/contact-item.component';
+import { ContactItemComponent } from './contacts/contact-list/contact-item/contact-item.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    ContactsComponent,
-    ContactListComponent,
-    ContactsDetailComponent,
-    DocumentsComponent,
-    DocumentListComponent,
-    DocumentItemComponent,
-    DocumentDetailComponent,
-    MessageItemComponent,
-    MessageEditComponent,
-    MessageListComponent,
-    ContactItemComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      HeaderComponent,
+      ContactsComponent,
+      ContactListComponent,
+      ContactsDetailComponent,
+      DocumentsComponent,
+      DocumentListComponent,
+      DocumentItemComponent,
+      DocumentDetailComponent,
+      MessageItemComponent,
+      MessageEditComponent,
+      MessageListComponent,
+      ContactItemComponent
+   ],
+   imports: [
+      BrowserModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }
