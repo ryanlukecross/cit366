@@ -1,3 +1,16 @@
 export class Contact {
-   constructor(public contactId: number, public name: string, public email: string, public phone: string, public imageUrl: string, public group: []){};
+   public contactId: number;
+   public name: string;
+   public email: string;
+   public phone: string;
+   public imageUrl: string;
+   public group: number;
+   constructor(contactId: number, name: string, email: string, phone: string, imageUrl: string, group: number) {
+      this.contactId = contactId;
+      this.name = name;
+      this.email = email;
+      this.phone = phone;
+      this.imageUrl = imageUrl;
+      this.group = group;
+   };
 }
