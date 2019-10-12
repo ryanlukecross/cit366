@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'cms-document-item',
-  templateUrl: './document-item.component.html',
-  styleUrls: ['./document-item.component.css']
+   selector: 'cms-document-item',
+   templateUrl: './document-item.component.html',
+   styleUrls: ['./document-item.component.css']
 })
 export class DocumentItemComponent implements OnInit {
+   @Input() document: Document;
+   constructor() { }
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+   ngOnInit() {
+   }
 
 }
