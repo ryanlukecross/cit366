@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-5">
-        <cms-contact-list (contactWasSelected)="selectedContact = $event"></cms-contact-list>
+        <app-recipe-list (contactWasSelected)="selectedContact = $event"></app-recipe-list>
     </div>
     <div class="col-md-4">
-        <cms-contacts-detail [contact]="contact" *ngIf="selectedContact; else infoText"></cms-contacts-detail>
+        <app-recipe-detail [recipe]='recipe' *ngIf="selectedRecipe; else infoText"></app-recipe-detail>
         <ng-template #infoText>
             <p>Please select a Contact</p>
         </ng-template>

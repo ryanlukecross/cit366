@@ -14,6 +14,7 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { ContactItemComponent } from './contacts/contact-list/contact-item/contact-item.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -32,7 +33,7 @@ import { ContactItemComponent } from './contacts/contact-list/contact-item/conta
       ContactItemComponent
    ],
    imports: [
-      BrowserModule
+      BrowserModule, FormsModule
    ],
    providers: [],
    bootstrap: [AppComponent]

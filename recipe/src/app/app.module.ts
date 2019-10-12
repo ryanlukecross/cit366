@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
@@ -11,20 +12,21 @@ import { RecipeDetailComponent } from './recipe-book/recipe-detail/recipe-detail
 import { HeaderComponent } from './header.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShoppingListComponent,
-    RecipeBookComponent,
-    ShoppingListEditComponent,
-    RecipeListComponent,
-    RecipeItemComponent,
-    RecipeDetailComponent,
-    HeaderComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      ShoppingListComponent,
+      RecipeBookComponent,
+      ShoppingListEditComponent,
+      RecipeListComponent,
+      RecipeItemComponent,
+      RecipeDetailComponent,
+      HeaderComponent
+   ],
+   imports: [
+      BrowserModule,
+      FormsModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }
