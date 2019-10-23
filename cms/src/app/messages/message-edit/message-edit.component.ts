@@ -9,7 +9,7 @@ import { Message } from '../message.model';
 export class MessageEditComponent implements OnInit {
    @ViewChild('subject', { static: false }) subjectInputRef: ElementRef;
    @ViewChild('msgText', { static: false }) msgTextInputRef: ElementRef;
-   currentSender: string = "Ryan Cross";
+   currentSender: string = "Ryan Cross"; // Need to change to a number (messages are sent by number)
    @Output() messageAdded = new EventEmitter<Message>();
    constructor() { }
 

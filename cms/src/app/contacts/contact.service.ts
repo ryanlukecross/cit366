@@ -1,14 +1,29 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, EventEmitter } from '@angular/core';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 @Injectable({
    providedIn: 'root'
 })
 export class ContactService implements OnInit {
+   contactSelectedEvent = new EventEmitter<Contact>();
    contacts: Contact[] = [];
-   constructor() { }
+   constructor() { this.contacts = MOCKCONTACTS }
 
    ngOnInit() {
-      this.contacts = MOCKCONTACTS;
+
    }
+
+   getContact(id: string) {
+      for (const contact of this.contacts) {
+         if (contact.contactId === id) {
+            return contact;
+         }
+      }
+   }
+
+   getContacts() {
+      return this.contacts.slice();
+   }
+
+
 }
