@@ -6,19 +6,36 @@ import { MOCKCONTACTS } from './MOCKCONTACTS';
 })
 export class ContactService implements OnInit {
    contactSelectedEvent = new EventEmitter<Contact>();
-   contacts: Contact[] = [];
+   contactChangedEvent = new EventEmitter<Contact[]>();
+   contacts: Contact[];
    constructor() { this.contacts = MOCKCONTACTS }
 
    ngOnInit() {
 
    }
 
-   getContact(id: string) {
+   deleteContact(contact: Contact) {
+      if (contact === null) {
+         return;
+      }
+
+      const pos = this.contacts.indexOf(contact);
+      if (pos < 0) {
+         return;
+      }
+
+      this.contacts.splice(pos, 1);
+      this.contactChangedEvent.emit(this.contacts.slice());
+   }
+
+   getContact(id: string): Contact {
       for (const contact of this.contacts) {
          if (contact.contactId === id) {
             return contact;
          }
       }
+
+      return null;
    }
 
    getContacts() {
