@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { DndModule } from 'ng2-dnd';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -16,7 +16,6 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { ContactItemComponent } from './contacts/contact-list/contact-item/contact-item.component';
-import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentViewComponent } from './documents/document-view/document-view.component';
@@ -46,9 +45,9 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
       ContactEditComponent
    ],
    imports: [
-      BrowserModule, FormsModule, AppRoutingModule
+      BrowserModule, FormsModule, AppRoutingModule, DndModule.forRoot()
    ],
-   providers: [WindRefService],
+   providers: [],
    bootstrap: [AppComponent]
 })
 export class AppModule { }

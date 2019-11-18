@@ -19,7 +19,8 @@ export class DocumentService {
    }
 
    addDocument(newDocument: Document) {
-      if (typeof (newDocument) === undefined || newDocument === null) {
+      console.log("ADDED DOCUMENT");
+      if (!newDocument) {
          return;
       }
       this.maxDocumentId++;
