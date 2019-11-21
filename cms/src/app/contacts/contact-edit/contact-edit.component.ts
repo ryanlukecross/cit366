@@ -68,7 +68,7 @@ export class ContactEditComponent implements OnInit {
 
    onSubmit(form: NgForm) {
       const values = form.value;
-      const newContact = new Contact(values.id, values.name, values.email, values.phone, values.imageUrl, values.groupList);
+      const newContact = new Contact(values.id, values.name, values.email, values.phone, values.imageUrl, this.groupContacts);
       console.log("URL: " + values.contactUrl);
 
       if (this.editMode == true) {
@@ -85,6 +85,7 @@ export class ContactEditComponent implements OnInit {
       let selectedContact: Contact = $event.dragData;
       this.invalidGroupContact = this.isInvalidContact(selectedContact);
       if (this.invalidGroupContact) {
+         console.log("Invalid Contact! contact-edit.component.ts:88");
          return;
       }
       console.log("Adding to group: " + selectedContact.name)
