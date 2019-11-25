@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Injectable({
    providedIn: 'root'
@@ -12,11 +13,12 @@ export class DocumentService {
    selectedDocumentEvent = new Subject<Document>();
    documentListChangedEvent = new Subject<Document[]>();
 
-
    constructor() {
       this.documents = MOCKDOCUMENTS;
       this.maxDocumentId = this.getMaxId();
    }
+
+
 
    addDocument(newDocument: Document) {
       console.log("ADDED DOCUMENT");
