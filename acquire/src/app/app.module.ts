@@ -7,6 +7,7 @@ import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { PlayerDetailComponent } from './admin/player-list/player-detail/player-detail.component';
 import { AdminComponent } from './admin/admin.component';
 import { PlayerEditComponent } from './admin/player-list/player-edit/player-edit.component';
+import { AppHeaderComponent } from './app-header.component';
 
 @NgModule({
    declarations: [
@@ -14,7 +15,8 @@ import { PlayerEditComponent } from './admin/player-list/player-edit/player-edit
       PlayerListComponent,
       PlayerDetailComponent,
       AdminComponent,
-      PlayerEditComponent
+      PlayerEditComponent,
+      AppHeaderComponent
    ],
    imports: [
       BrowserModule,
