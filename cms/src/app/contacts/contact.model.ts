@@ -1,4 +1,5 @@
 export class Contact {
+   public _id: string;
    public contactId: string;
    public name: string;
    public email: string;

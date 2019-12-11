@@ -41,7 +41,7 @@
                 </div>
 
             </div>
-            <div *ngIf="((name.invalid || name.dirty) && name.touched) || (email.touched && (email.invalid || email.dirty))" class="alert alert-danger">The Name and Email are required
+            <div *ngIf="(name.invalid && (name.dirty || name.touched)) || (email.invalid &&  (email.touched || email.dirty))" class="alert alert-danger">The Name and Email are required
             </div>
 
             <div class="row">

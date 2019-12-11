@@ -53,7 +53,7 @@ export class DocumentEditComponent implements OnInit {
 
    onSubmit(form: NgForm) {
       const values = form.value;
-      const newDocument = new Document("", values.name, values.description, values.documentUrl, null);
+      const newDocument = new Document(null, "", values.name, values.description, values.documentUrl, null);
       console.log("URL: " + values.documentUrl);
 
       if (this.editMode == true) {

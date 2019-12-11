@@ -19,7 +19,7 @@ export class ContactListComponent implements OnInit {
                this.contacts = contacts;
             }
          );
-      this.contacts = this.contactService.getContacts();
+      this.contactService.getContacts();
    }
 
    onKeyPress(value: string) {

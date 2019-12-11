@@ -15,7 +15,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
    constructor(private documentService: DocumentService, private route: ActivatedRoute) { }
 
    ngOnInit() {
-      this.documents = this.documentService.getDocuments();
+      this.documentService.getDocuments();
       this.changeSubscription = this.documentService.documentListChangedEvent
          .subscribe(
             (documents: Document[]) => {
@@ -26,7 +26,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       this.route.params
          .subscribe(
             (params: Params) => {
-               this.documents = this.documentService.getDocuments();
+               this.documentService.getDocuments();
             }
          )
 
