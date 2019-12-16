@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 var index = require('./server/routes/app');
 
 // ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ... 
-// const messageRoues = require('./server/routes/messages');
+const messageRoutes = require('./server/routes/messages');
 const contactRoutes = require('./server/routes/contacts');
 const documentRoutes = require('./server/routes/documents');
 
@@ -57,7 +57,7 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 app.use('/', index);
 
 // ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
-// app.use('/messages', messageRoutes);
+app.use('/messages', messageRoutes);
 app.use('/contacts', contactRoutes);
 app.use('/documents', documentRoutes);
 

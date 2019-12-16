@@ -6,10 +6,6 @@ export class Message {
       public id: string,
       public subject: string,
       public msgText: string,
-      public sender: Contact
+      public sender: string
    ) { }
-   toString() {
-      let text = "ID: " + this.id + " | Subject: " + this.subject + " | MessageText: " + this.msgText + " | Sender: " + this.sender;
-      return text;
-   }
 }

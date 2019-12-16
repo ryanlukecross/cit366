@@ -25,10 +25,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    const maxDocumentId = sequenceGenerator.nextId("documents");
+    const maxid = sequenceGenerator.nextId("documents");
 
     const document = new Document({
-        id: maxDocumentId,
+        id: maxid,
         name: req.body.name,
         description: req.body.description,
         url: req.body.url
@@ -47,11 +47,13 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-    Document.findOne({ id: req.params.id })
+    console.log(req.params.id);
+    Document.findOne({ id: req.params.id.toString() })
         .then(document => {
             document.name = req.body.name;
             document.description = req.body.description;
             document.url = req.body.url;
+
             console.log("server/routers/documents.js/put/findOne/.then");
 
             Document.updateOne({ id: req.params.id }, document)
@@ -66,6 +68,10 @@ router.put('/:id', (req, res, next) => {
                         error: { document: 'Document not found' }
                     })
                 });
+        })
+        .catch(error => {
+            console.log(error);
+            returnError(res, error);
         });
 });
 

@@ -47,15 +47,17 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-    console.log("contacts.js 50");
+
     Contact.findOne({ id: req.params.id })
         .then(contact => {
-            console.log("Attempting to update: " + id);
-            contact.id = req.body.contact.id;
-            contact.name = req.body.contact.name;
-            contact.email = req.body.contact.email;
-            contact.phone = req.body.contact.phone;
-            contact.imageUrl = req.body.contact.imageUrl;
+            console.log(".then contacts.js");
+            contact.id = req.body.id;
+            contact._id = req.body._id;
+            contact.name = req.body.name;
+            contact.email = req.body.email;
+            contact.phone = req.body.phone;
+            contact.imageUrl = req.body.imageUrl;
+            contact.group = null;
 
             console.log("server/routers/contacts.js/put/findOne/.then");
 
@@ -66,13 +68,15 @@ router.put('/:id', (req, res, next) => {
                     });
                 })
                 .catch(error => {
+                    console.log(error + " CONTACTS.JS 70");
                     res.status(500).json({
                         message: 'Contact not found',
                         error: { contact: 'Contact not found' }
-                    })
+                    });
                 });
         })
         .catch(error => {
+            console.log(error);
             returnError(res, error);
         });
 });

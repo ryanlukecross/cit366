@@ -19,7 +19,12 @@ const appRoutes: Routes = [
          { path: ':id/edit', component: DocumentEditComponent }
       ]
    },
-   { path: 'messages', component: MessageListComponent },
+   {
+      path: 'messages', component: MessageListComponent, children: [
+         { path: 'new', component: ContactEditComponent },
+         { path: ':id', component: ContactDetailComponent }
+      ]
+   },
    {
       path: 'contacts', component: ContactsComponent, children: [
          { path: 'new', component: ContactEditComponent },

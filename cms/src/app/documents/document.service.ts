@@ -33,8 +33,8 @@ export class DocumentService {
             { headers: headers }
          )
          .subscribe(response => {
-            this.getDocuments();
-            this.documentListChangedEvent.next(this.documents);
+            this.documents.push(newDocument);
+            this.sortAndSend();
          });
 
    }
@@ -79,27 +79,29 @@ export class DocumentService {
    }
 
    updateDocument(originalDocument: Document, newDocument: Document) {
-      if (typeof (newDocument) === undefined ||
-         newDocument === null ||
-         typeof (originalDocument) === undefined ||
-         originalDocument === null) {
+      if (!newDocument || !originalDocument) {
          return;
       }
+
+      const pos = this.documents.findIndex(d => d.id === originalDocument.id);
 
       const headers = new HttpHeaders({
          'Content-Type': 'application/json'
       });
 
-      const document = JSON.parse(JSON.stringify(newDocument));
+      newDocument._id = originalDocument._id;
+      newDocument.id = originalDocument.id;
+
       this.http
-         .put<{ message: string, document: Document, id: string }>(
+         .put(
             'http://localhost:3000/documents/' + originalDocument.id,
-            document,
+            newDocument,
             { headers: headers }
          )
          .subscribe(response => {
-            this.getDocuments();
-            this.documentListChangedEvent.next(this.documents);
+            // this.getDocuments();
+            this.documents[pos] = newDocument;
+            this.sortAndSend();
          });
    }
 

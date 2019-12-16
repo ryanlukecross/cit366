@@ -9,7 +9,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 })
 export class ContactService {
    contacts: Contact[] = [];
-   contactSelectedEvent = new Subject<Contact>();
+   selectedContactEvent = new Subject<Contact>();
    contactListChangedEvent = new Subject<Contact[]>();
 
    constructor(private http: HttpClient) {
@@ -33,16 +33,17 @@ export class ContactService {
             { headers: headers }
          )
          .subscribe(response => {
-            this.getContacts();
-            this.contactListChangedEvent.next(this.contacts);
+            this.contacts.push(newContact);
+            this.sortAndSend();
          });
 
    }
 
    getContact(id: string): Contact {
+      console.log("contact_id" + id);
       for (const contact of this.contacts) {
          if (contact.id == id) {
-            console.log("GETTING CONCACT: " + id);
+            console.log("I'VE GOT A MATCH");
             return contact;
          }
       }
@@ -54,15 +55,7 @@ export class ContactService {
          .subscribe(
             // success function
             (res) => {
-               this.contacts = res.contacts.sort(function (a, b) {
-                  if (a.id > b.id) {
-                     return 1;
-                  } else if (a.id < b.id) {
-                     return -1;
-                  } else {
-                     return 0;
-                  }
-               });
+               this.contacts = res.contacts.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
                this.contactListChangedEvent.next(this.contacts.slice());
             },
             (error: any) => {
@@ -80,29 +73,29 @@ export class ContactService {
    }
 
    updateContact(originalContact: Contact, newContact: Contact) {
-      if (typeof (newContact) === undefined ||
-         newContact === null ||
-         typeof (originalContact) === undefined ||
-         originalContact === null) {
+      if (!newContact || !originalContact) {
          return;
       }
+
+      const pos = this.contacts.findIndex(d => d.id === originalContact.id);
 
       const headers = new HttpHeaders({
          'Content-Type': 'application/json'
       });
 
-      console.log("UPDATING CONTACT WITH ID: " + originalContact.id);
+      newContact._id = originalContact._id;
+      newContact.id = originalContact.id;
 
-      const contact = JSON.parse(JSON.stringify(newContact));
       this.http
-         .put<{ message: string, contact: Contact, id: string }>(
+         .put(
             'http://localhost:3000/contacts/' + originalContact.id,
-            contact,
+            newContact,
             { headers: headers }
          )
          .subscribe(response => {
-            this.getContacts();
-            this.contactListChangedEvent.next(this.contacts);
+            // this.getContacts();
+            this.contacts[pos] = newContact;
+            this.sortAndSend();
          });
    }
 
