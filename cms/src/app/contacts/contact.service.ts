@@ -1,53 +1,69 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Contact } from './contact.model';
-import { MOCKCONTACTS } from './MOCKCONTACTS';
+// import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+
 @Injectable({
    providedIn: 'root'
 })
-export class ContactService implements OnInit {
+export class ContactService {
+   contacts: Contact[] = [];
    contactSelectedEvent = new Subject<Contact>();
    contactListChangedEvent = new Subject<Contact[]>();
-   contacts: Contact[];
-   maxContactId: number;
-   constructor(private http: HttpClient) { this.contacts = MOCKCONTACTS }
 
-   ngOnInit() {
+   constructor(private http: HttpClient) {
+   }
+
+
+   addContact(newContact: Contact) {
+
+      if (!newContact) {
+         return;
+      }
+
+      const headers = new HttpHeaders({
+         'Content-Type': 'application/json'
+      });
+      const contact = JSON.parse(JSON.stringify(newContact));
+      this.http
+         .post<{ message: string, contact: Contact }>(
+            'http://localhost:3000/contacts',
+            contact,
+            { headers: headers }
+         )
+         .subscribe(response => {
+            this.getContacts();
+            this.contactListChangedEvent.next(this.contacts);
+         });
 
    }
 
-   storeContacts() {
-      const contacts = JSON.parse(JSON.stringify(this.contacts));
-      this.http
-         .put(
-            'https://rlccms.firebaseio.com/contacts.json',
-            contacts
-         )
-         .subscribe(response => {
-            console.log(response);
-         });
+   getContact(id: string): Contact {
+      for (const contact of this.contacts) {
+         if (contact.id == id) {
+            console.log("GETTING CONCACT: " + id);
+            return contact;
+         }
+      }
+      return null;
    }
 
    getContacts() {
-      this.http.get<Contact[]>('https://rlccms.firebaseio.com/contacts.json')
+      this.http.get<{ message: string, contacts: Contact[] }>('http://localhost:3000/contacts')
          .subscribe(
             // success function
-            (contacts: Contact[]) => {
-               this.contacts = contacts.sort(function (a, b) {
-                  if (a.contactId > b.contactId) {
+            (res) => {
+               this.contacts = res.contacts.sort(function (a, b) {
+                  if (a.id > b.id) {
                      return 1;
-                  } else if (a.contactId < b.contactId) {
+                  } else if (a.id < b.id) {
                      return -1;
                   } else {
                      return 0;
                   }
                });
-               this.maxContactId = this.getMaxId();
-               this.contactListChangedEvent.next(contacts.slice());
-               console.log(contacts.toString());
-               console.log(this.contacts.toString());
-
+               this.contactListChangedEvent.next(this.contacts.slice());
             },
             (error: any) => {
                console.log("Error at contact.service.ts line 57: " + error.toString());
@@ -57,25 +73,10 @@ export class ContactService implements OnInit {
       return;
    }
 
-   addContact(newContact: Contact) {
-      this.maxContactId = this.getMaxId();
-      if (typeof (newContact) === undefined || newContact === null) {
-         return;
-      }
-      this.maxContactId++;
-      newContact.contactId = this.maxContactId.toString();
-      this.contacts.push(newContact);
-      const contactsListClone = this.contacts.slice();
-      this.contactListChangedEvent.next(contactsListClone);
-   }
 
-   getContact(id: string): Contact {
-      for (const contact of this.contacts) {
-         if (contact.contactId == id) {
-            return contact;
-         }
-      }
-      return null;
+   setContacts(contacts: Contact[]) {
+      this.contacts = contacts;
+      this.contactListChangedEvent.next(this.contacts.slice());
    }
 
    updateContact(originalContact: Contact, newContact: Contact) {
@@ -86,18 +87,29 @@ export class ContactService implements OnInit {
          return;
       }
 
-      const pos = this.contacts.indexOf(originalContact);
+      const headers = new HttpHeaders({
+         'Content-Type': 'application/json'
+      });
 
-      if (pos < 0) {
-         return;
-      }
+      console.log("UPDATING CONTACT WITH ID: " + originalContact.id);
 
-      newContact.contactId = originalContact.contactId;
-      this.contacts[pos] = newContact;
-      const contactsListClone = this.contacts.slice();
-      this.contactListChangedEvent.next(contactsListClone);
+      const contact = JSON.parse(JSON.stringify(newContact));
+      this.http
+         .put<{ message: string, contact: Contact, id: string }>(
+            'http://localhost:3000/contacts/' + originalContact.id,
+            contact,
+            { headers: headers }
+         )
+         .subscribe(response => {
+            this.getContacts();
+            this.contactListChangedEvent.next(this.contacts);
+         });
    }
 
+   sortAndSend() {
+      this.contacts.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+      this.contactListChangedEvent.next(this.contacts.slice());
+   }
 
    deleteContact(contact: Contact) {
       if (typeof (contact) === undefined || contact === null) {
@@ -109,22 +121,12 @@ export class ContactService implements OnInit {
          return;
       }
 
-      this.contacts.splice(pos, 1);
-      this.contactListChangedEvent.next(this.contacts.slice());
+      this.http.delete('http://localhost:3000/contacts/' + contact.id)
+         .subscribe(
+            (response: Response) => {
+               this.contacts.splice(pos, 1);
+               this.sortAndSend();
+            }
+         );
    }
-
-
-
-   getMaxId(): number {
-      let maxId = 0;
-      for (const contact of this.contacts) {
-         let currentId: number = parseInt(contact.contactId);
-         if (currentId > maxId) {
-            maxId = currentId;
-         }
-      }
-      return maxId;
-   }
-
-
 }

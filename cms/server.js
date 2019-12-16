@@ -12,8 +12,8 @@ var index = require('./server/routes/app');
 
 // ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ... 
 // const messageRoues = require('./server/routes/messages');
-// const contactRoutes = require('./server/routes/contacts');
-const documentRoues = require('./server/routes/documents');
+const contactRoutes = require('./server/routes/contacts');
+const documentRoutes = require('./server/routes/documents');
 
 // establish a connection to the mongo database
 // *** Important *** change yourPort and yourDatabase
@@ -42,8 +42,12 @@ app.use((req, res, next) => {
         "Access-Control-Allow-Methods",
         "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     );
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
     next();
-})
+});
 
 // Tell express to use the specified director as the
 // root directory for your web site
@@ -54,7 +58,7 @@ app.use('/', index);
 
 // ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
 // app.use('/messages', messageRoutes);
-// app.use('/contacts', contactRoutes);
+app.use('/contacts', contactRoutes);
 app.use('/documents', documentRoutes);
 
 // Tell express to map all other non-defined routes back to the index page

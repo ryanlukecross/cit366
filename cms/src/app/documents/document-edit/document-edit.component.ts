@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
    styleUrls: ['./document-edit.component.css']
 })
 export class DocumentEditComponent implements OnInit {
-   originalDocument: Document;
    document: Document;
    editMode = false;
    subscription: Subscription;
@@ -30,18 +29,18 @@ export class DocumentEditComponent implements OnInit {
                   return;
                }
 
-               this.originalDocument = this.documentService.getDocument(this.id);
+               this.document = this.documentService.getDocument(this.id);
 
-               if (!this.originalDocument) {
+               if (!this.document) {
                   this.editMode = false;
                   return;
                }
 
                this.editMode = true;
-               console.log("Original Document: " + this.originalDocument);
+               console.log("Original Document: " + this.document);
 
 
-               this.document = JSON.parse(JSON.stringify(this.originalDocument));
+               this.document = JSON.parse(JSON.stringify(this.document));
 
             }
          );
@@ -57,11 +56,12 @@ export class DocumentEditComponent implements OnInit {
       console.log("URL: " + values.documentUrl);
 
       if (this.editMode == true) {
-         console.log("onsubmit - document edit component line 53. editMode: " + this.editMode);
-         this.documentService.updateDocument(this.originalDocument, newDocument);
+         console.log("onsubmit - document edit component line 53 documentDescription: " + this.document.description + " new description: " + newDocument.description);
+         this.documentService.updateDocument(this.document, newDocument);
       } else {
          this.documentService.addDocument(newDocument);
       }
+      this.documentService.getDocuments();
 
       this.router.navigate(['/documents']);
    }

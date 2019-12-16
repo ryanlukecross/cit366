@@ -12,7 +12,7 @@ export class MessageEditComponent implements OnInit {
    @ViewChild('subject', { static: false }) subjectInputRef: ElementRef;
    @ViewChild('msgText', { static: false }) msgTextInputRef: ElementRef;
    currentSender: Contact = {
-      _id: null, contactId: '25',
+      _id: null, id: '25',
       name: 'Ryan Cross',
       email: 'cro16052@byui.edu',
       phone: '208-987-1234',

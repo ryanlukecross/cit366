@@ -32,7 +32,7 @@ router.post('/', (req, res, next) => {
         name: req.body.name,
         description: req.body.description,
         url: req.body.url
-    })
+    });
 
     document.save()
         .then(createdDocument => {
@@ -42,7 +42,7 @@ router.post('/', (req, res, next) => {
             });
         })
         .catch(error => {
-            returnedError(res, error);
+            returnError(res, error);
         });
 });
 
@@ -50,10 +50,11 @@ router.put('/:id', (req, res, next) => {
     Document.findOne({ id: req.params.id })
         .then(document => {
             document.name = req.body.name;
-            document.description = req.body.name;
+            document.description = req.body.description;
             document.url = req.body.url;
+            console.log("server/routers/documents.js/put/findOne/.then");
 
-            Document.updateOnd({ id: req.params.id }, document)
+            Document.updateOne({ id: req.params.id }, document)
                 .then(result => {
                     res.status(204).json({
                         message: "Document updated successfully"
@@ -70,17 +71,23 @@ router.put('/:id', (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
     Document.findOne({ id: req.params.id })
-        .then(result => {
-            res.status(204).json({
-                message: "Document deleted successfully"
-            });
+        .then(documents => {
+            Document.deleteOne({ id: req.params.id })
+                .then(result => {
+                    res.status(201).json({
+                        documents: "Document deleted successfully"
+                    });
+                })
+                .catch(error => {
+                    res.sendStatus(500).json({
+                        message: "Document not found",
+                        error: { document: 'Document not found' }
+                    });
+                });
         })
         .catch(error => {
-            res.sendStatus(500).json({
-                message: "Document not found",
-                error: { document: 'Document not found' }
-            });
-        });
+            returnError(res, error);
+        })
 });
 
 module.exports = router;

@@ -25,14 +25,14 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    const maxContactId = sequenceGenerator.nextId("contacts");
+    const maxid = sequenceGenerator.nextId("contacts");
 
     const contact = new Contact({
-        id: maxContactId,
+        id: maxid,
         name: req.body.name,
         description: req.body.description,
         url: req.body.url
-    })
+    });
 
     contact.save()
         .then(createdContact => {
@@ -42,45 +42,60 @@ router.post('/', (req, res, next) => {
             });
         })
         .catch(error => {
-            returnedError(res, error);
+            returnError(res, error);
         });
 });
 
 router.put('/:id', (req, res, next) => {
-    Contact.findOne({ id: req.params.contactId })
+    console.log("contacts.js 50");
+    Contact.findOne({ id: req.params.id })
         .then(contact => {
-            contact.name = req.body.name;
-            contact.description = req.body.name;
-            contact.url = req.body.url;
+            console.log("Attempting to update: " + id);
+            contact.id = req.body.contact.id;
+            contact.name = req.body.contact.name;
+            contact.email = req.body.contact.email;
+            contact.phone = req.body.contact.phone;
+            contact.imageUrl = req.body.contact.imageUrl;
 
-            Contact.updateOnd({ id: req.params.contactId }, contact)
+            console.log("server/routers/contacts.js/put/findOne/.then");
+
+            Contact.updateOne({ id: req.params.id }, contact)
                 .then(result => {
-                    resstatus(204).json({
+                    res.status(204).json({
                         message: "Contact updated successfully"
-                    })
+                    });
                 })
                 .catch(error => {
-                    res.sendStatus(500).json({
+                    res.status(500).json({
                         message: 'Contact not found',
                         error: { contact: 'Contact not found' }
                     })
                 });
+        })
+        .catch(error => {
+            returnError(res, error);
         });
 });
 
 router.delete("/:id", (req, res, next) => {
-    Contact.findOne({ id: req.params.contactId })
-        .then(result => {
-            res.status(204).json({
-                message: "Contact deleted successfully"
-            });
+    Contact.findOne({ id: req.params.id })
+        .then(contacts => {
+            Contact.deleteOne({ id: req.params.id })
+                .then(result => {
+                    res.status(201).json({
+                        contacts: "Contact deleted successfully"
+                    });
+                })
+                .catch(error => {
+                    res.sendStatus(500).json({
+                        message: "Contact not found",
+                        error: { contact: 'Contact not found' }
+                    });
+                });
         })
         .catch(error => {
-            res.sendStatus(500).json({
-                message: "Contact not found",
-                error: { contact: 'Contact not found' }
-            });
-        });
+            returnError(res, error);
+        })
 });
 
 module.exports = router;
