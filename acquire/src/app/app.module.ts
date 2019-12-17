@@ -8,6 +8,9 @@ import { PlayerDetailComponent } from './admin/player-list/player-detail/player-
 import { AdminComponent } from './admin/admin.component';
 import { PlayerEditComponent } from './admin/player-list/player-edit/player-edit.component';
 import { AppHeaderComponent } from './app-header.component';
+import { PlayerItemComponent } from './admin/player-item/player-item.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
@@ -16,11 +19,14 @@ import { AppHeaderComponent } from './app-header.component';
       PlayerDetailComponent,
       AdminComponent,
       PlayerEditComponent,
-      AppHeaderComponent
+      AppHeaderComponent,
+      PlayerItemComponent
    ],
    imports: [
       BrowserModule,
-      AppRoutingModule
+      AppRoutingModule,
+      FormsModule,
+      HttpClientModule
    ],
    providers: [],
    bootstrap: [AppComponent]

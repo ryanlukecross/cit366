@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../contact.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Contact } from '../contact.model';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -19,6 +19,7 @@ export class ContactEditComponent implements OnInit {
    subscription: Subscription;
    originalContact: Contact;
    invalidGroupContact: boolean = false;
+
    constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute) { }
 
    ngOnInit() {

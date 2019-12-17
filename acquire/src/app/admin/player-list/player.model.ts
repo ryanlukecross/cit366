@@ -8,6 +8,9 @@ export class Player {
    public image_url: string; // https://live.staticflickr.com/5754/21701460995_f57f43094f_b.jpg
    public game_piece_url: string; // https://live.staticflickr.com/5649/21738960304_8b8e5ee854_b.jpg
 
+   // https://live.staticflickr.com/2910/33677894546_09014d4392_b.jpg
+
+
    constructor(username: string, password: string, first_name: string, last_name: string, total_dollars_earned: number, image_url: string, game_piece_url: string) {
       this.username = username;
       this.password = password;
