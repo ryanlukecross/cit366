@@ -46,7 +46,7 @@ export class PlayerEditComponent implements OnInit {
    }
 
    onCancel() {
-      this.router.navigate(['/players']);
+      this.router.navigate(['/admin/players']);
    }
 
 
@@ -56,13 +56,13 @@ export class PlayerEditComponent implements OnInit {
       console.log("URL: " + values.playerUrl);
 
       if (this.editMode == true) {
-         console.log("onsubmit - player edit component line 53. editMode: " + this.editMode);
+         console.log("onsubmit - player edit component line 59. editMode: " + this.editMode);
          this.playerService.updatePlayer(this.player, newPlayer);
       } else {
          this.playerService.addPlayer(newPlayer);
       }
 
-      this.router.navigate(['/players']);
+      this.router.navigate(['/admin/players']);
    }
 
 

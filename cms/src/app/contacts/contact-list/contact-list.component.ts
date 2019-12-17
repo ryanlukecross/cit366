@@ -8,7 +8,6 @@ import { ContactService } from '../contact.service';
    styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit {
-   term: string;
    contacts: Contact[] = [];
    constructor(private contactService: ContactService) { }
 
@@ -22,12 +21,5 @@ export class ContactListComponent implements OnInit {
       this.contactService.getContacts();
    }
 
-   onKeyPress(value: string) {
-      this.term = value;
-   }
-
-   search(value: string) {
-      this.term = value;
-   }
 
 }

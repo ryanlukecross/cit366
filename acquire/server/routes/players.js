@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var sequenceGenerator = require('./sequenceGenerator.js');
 
 const Player = require('../models/player');
 
@@ -25,12 +24,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    const maxid = sequenceGenerator.nextId("players");
 
     const player = new Player({
-        id: maxid,
         username: req.body.username,
-        passcode: req.body.passcode,
+        password: req.body.password,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
@@ -48,16 +45,18 @@ router.post('/', (req, res, next) => {
             });
         })
         .catch(error => {
+            console.log(error);
             returnError(res, error);
         });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:username', (req, res, next) => {
 
-    Player.findOne({ id: req.params.id })
+    Player.findOne({ username: req.params.username })
         .then(player => {
+
             player.username = req.body.username;
-            player.passcode = req.body.passcode;
+            player.password = req.body.password;
             player.first_name = req.body.first_name;
             player.last_name = req.body.last_name;
             player.email = req.body.email;
@@ -68,7 +67,7 @@ router.put('/:id', (req, res, next) => {
 
             console.log("server/routers/players.js/put/findOne/.then");
 
-            Player.updateOne({ id: req.params.id }, player)
+            Player.updateOne({ username: req.params.username }, player)
                 .then(result => {
                     res.status(204).json({
                         message: "Player updated successfully"
@@ -88,10 +87,10 @@ router.put('/:id', (req, res, next) => {
         });
 });
 
-router.delete("/:id", (req, res, next) => {
-    Player.findOne({ id: req.params.id })
+router.delete("/:username", (req, res, next) => {
+    Player.findOne({ username: req.params.username })
         .then(players => {
-            Player.deleteOne({ id: req.params.id })
+            Player.deleteOne({ username: req.params.username })
                 .then(result => {
                     res.status(201).json({
                         players: "Player deleted successfully"

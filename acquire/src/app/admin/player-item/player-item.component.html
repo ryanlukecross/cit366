@@ -1,1 +1,9 @@
-<p>player-item works!</p>
+<a routerLinkActive="active" [routerLink]="[player?.username]" class="list-group-item clearfix">
+    <div class="container spread">
+        <div class="player-info">
+            <div class="row"><img [src]="player.game_piece_url" alt="image of player" class="img-responsive" style="max-height: 75px" class='border border-dark space'>
+                <h4 class="list-group-item-heading">{{ player.username }}</h4>
+            </div>
+        </div>
+    </div>
+</a>

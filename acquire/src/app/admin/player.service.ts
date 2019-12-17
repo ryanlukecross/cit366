@@ -25,6 +25,7 @@ export class PlayerService {
          'Content-Type': 'application/json'
       });
       const player = JSON.parse(JSON.stringify(newPlayer));
+      player.total_dollars_earned = 0;
       this.http
          .post<{ message: string, player: Player }>(
             'http://localhost:3000/players',
@@ -81,7 +82,8 @@ export class PlayerService {
       });
 
       newPlayer._id = originalPlayer._id;
-      newPlayer.username = originalPlayer.username;
+
+      console.log("editing player: " + originalPlayer.username + ' to this username: ' + newPlayer.username);
 
       this.http
          .put(

@@ -14,8 +14,8 @@ const routes: Routes = [
          {
             path: 'players', component: PlayerListComponent, children: [
                { path: 'new', component: PlayerEditComponent },
-               { path: ':id', component: PlayerDetailComponent },
-               { path: ':id/edit', component: PlayerEditComponent }
+               { path: ':username', component: PlayerDetailComponent },
+               { path: ':username/edit', component: PlayerEditComponent }
             ]
          },
 

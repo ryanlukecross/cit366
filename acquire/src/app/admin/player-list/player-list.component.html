@@ -1,16 +1,20 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div class="row pad-left-right">
-            <span class="pull-left title">Players</span>
-            <a [routerLink]="['new']" class="btn btn-success pull-right">Create New Player</a>
+        <div class="panel-heading">
+            <h1>Players</h1>
         </div>
     </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="center-panel">
-            <app-player-item *ngFor="let player of players" [player]="player" [routerLink]="[player.id]"></app-player-item>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="center-panel">
+                <app-player-item *ngFor="let player of players" [player]="player" [routerLink]="[player.username]"></app-player-item>
+            </div>
         </div>
+        <br>
+        <a [routerLink]="['new']" class="btn btn-success pull-right">Create New Player</a>
+
+        <router-outlet></router-outlet>
+
     </div>
-    <router-outlet></router-outlet>
+    <br><br><br><br>
 </div>
